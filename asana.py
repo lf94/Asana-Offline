@@ -11,11 +11,12 @@ from PyQt4.QtCore import *
 
 class Asana:
 	def __init__(self):
-		self.tasks = None
+		self.tasks = []
 	
-	def read(self, filepath):
-		with open(filepath, "r") as fh:
-			self.tasks = json.loads(fh.read())['data']
+	def read(self, files):
+		for filepath in files:
+			with open(filepath, "r") as fh:
+				self.tasks.extend(json.loads(fh.read())['data'])
 			
 			
 	def taskClicked(self):
@@ -80,5 +81,5 @@ class Asana:
 		sys.exit(app.exec_())
 		
 a = Asana()
-a.read(sys.argv)
+a.read(sys.argv[1:])
 a.render()
